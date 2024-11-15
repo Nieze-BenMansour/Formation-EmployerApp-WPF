@@ -35,7 +35,7 @@ public partial class EmployerViewModel : ObservableObject
 
     public IRelayCommand CancelCommand { get; }
 
-
+    public IRelayCommand DeleteEmployerCommand { get; }
 
 
     public EmployerViewModel()
@@ -48,8 +48,15 @@ public partial class EmployerViewModel : ObservableObject
         AddEmployerCommand = new RelayCommand(AddEmployer);
         SelectedEmployer = Employer.Empty();
         EditEmployerCommand = new RelayCommand(EditEmployer, CanEditOrDelete);
+        DeleteEmployerCommand = new RelayCommand(DeleteEmployer, CanEditOrDelete);
         CancelCommand = new RelayCommand(CancelAndRefresh);
 
+    }
+
+    private void DeleteEmployer()
+    {
+        _employerService.Delete(SelectedEmployer);
+        CancelAndRefresh();
     }
 
     private void AddEmployer()

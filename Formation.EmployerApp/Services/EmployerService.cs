@@ -91,4 +91,9 @@ internal class EmployerService
         employerToEdit.DepartementCode = employer.DepartementCode;
         employerToEdit.Departement = employer.Departement;
     }
+
+    public void Delete(Employer selectedEmployer)
+    {
+        _dataSource.Remove( selectedEmployer ); 
+    }
 }
