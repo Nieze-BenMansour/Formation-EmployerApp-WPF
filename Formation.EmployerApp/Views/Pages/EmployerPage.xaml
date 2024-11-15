@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="Formation.EmployerApp.Views.Pages.EmployerPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Formation.EmployerApp.Views.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Row="0" Margin="10">
+            <TextBlock Text="Nom" />
+            <TextBox Text="{Binding SelectedEmployer.Nom, Mode=TwoWay}" />
+
+            <TextBlock Text="Prénom" />
+            <TextBox Text="{Binding SelectedEmployer.Prenom, Mode=TwoWay}" />
+
+            <TextBlock Text="Âge" />
+            <TextBox Text="{Binding SelectedEmployer.Age, Mode=TwoWay}" />
+
+            <TextBlock Text="Poste" />
+            <ComboBox ItemsSource="{Binding Postes}" SelectedItem="{Binding SelectedEmployer.Poste, Mode=TwoWay}" />
+
+            <TextBlock Text="Identifiant Nationale" />
+            <TextBox Text="{Binding SelectedEmployer.IdentifiantNationale, Mode=TwoWay}" />
+
+            <TextBlock Text="Date de Naissance" />
+            <DatePicker SelectedDate="{Binding SelectedEmployer.DateNaissance, Mode=TwoWay}" />
+
+            <TextBlock Text="Département" />
+            <ComboBox ItemsSource="{Binding Departements}"
+                      DisplayMemberPath="Nom"
+                      SelectedValuePath="Code"
+                      SelectedValue="{Binding SelectedEmployer.DepartementCode, Mode=TwoWay}" />
+
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Button Content="Créer" Command="{Binding AddEmployerCommand}" Margin="5" />
+                <Button Content="Modifier" Command="{Binding EditEmployerCommand}" Margin="5" />
+                <Button Content="Annuler" Command="{Binding CancelCommand}" Margin="5" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="10">
+            <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
+            <ProgressBar Height="6" Minimum="0"
+         Value="{Binding Path=ProgressBarValue, Mode=OneWay}"
+         Maximum="100"/>
+            <ListView ItemsSource="{Binding FilteredEmployers}" SelectedItem="{Binding SelectedEmployer, Mode=TwoWay}">
+                <!-- Définir les colonnes de la liste -->
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding Nom}" />
+                        <GridViewColumn Header="Prénom" DisplayMemberBinding="{Binding Prenom}" />
+                        <GridViewColumn Header="Poste" DisplayMemberBinding="{Binding Poste}" />
+                        <GridViewColumn Header="Département" DisplayMemberBinding="{Binding Departement.Nom}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Button Content="Supprimer" Command="{Binding DeleteEmployerCommand}" Margin="5" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
